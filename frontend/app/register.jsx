@@ -1,6 +1,6 @@
 
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { useCreatUser } from "../servis/register/mutation.js";
+import { useCreatUser } from "../servis/register/motation.js";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState } from "react";
 import { Ionicons } from '@expo/vector-icons';

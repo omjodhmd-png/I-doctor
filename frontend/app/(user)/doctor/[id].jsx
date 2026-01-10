@@ -9,6 +9,7 @@ import {
   Dimensions,
   ActivityIndicator,
   ImageBackground,
+  Platform,
 } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
@@ -48,11 +49,22 @@ export default function DoctorDetailScreen() {
     <View style={styles.container}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 140, }}
+        contentContainerStyle={{ paddingBottom: 140 }}
       >
         {/* ---------- Image ---------- */}
-        <View style={{ width, height: width * 1.4,paddingTop:30, }}>
-          <ImageBackground source={{ uri: doctor.imageUrl }} style={styles.image}>
+        <View style={{ width, height: width * 1.4 }}>
+          <ImageBackground
+            source={{ uri: doctor.imageUrl }}
+            style={styles.image}
+          >
+            {/* Back Button */}
+            <TouchableOpacity
+              style={styles.backButton}
+              onPress={() => router.back()}
+            >
+              <Ionicons name="arrow-back" size={24} color="#fff" />
+            </TouchableOpacity>
+
             <LinearGradient
               colors={["rgba(0,0,0,0.0)", "transparent", "#F9F9F9"]}
               style={styles.gradient}
@@ -114,7 +126,10 @@ export default function DoctorDetailScreen() {
           <View style={styles.infoRow}>
             <Ionicons name="time-outline" size={20} color="#0A84FF" />
             <Text style={styles.infoRowText}>
-              {doctor.workTime} {doctor.availabilityDays ? `(${doctor.availabilityDays})` : ""}
+              {doctor.workTime}{" "}
+              {doctor.availabilityDays
+                ? `(${doctor.availabilityDays})`
+                : ""}
             </Text>
           </View>
         </View>
@@ -128,7 +143,10 @@ export default function DoctorDetailScreen() {
               {doctor.address || "Address not provided"}
             </Text>
 
-            <TouchableOpacity style={styles.smallMapBtn} onPress={openMap}>
+            <TouchableOpacity
+              style={styles.smallMapBtn}
+              onPress={openMap}
+            >
               <Text style={styles.smallMapBtnText}>Map</Text>
             </TouchableOpacity>
           </View>
@@ -155,8 +173,18 @@ const styles = StyleSheet.create({
   center: { flex: 1, justifyContent: "center", alignItems: "center" },
   errorText: { color: "red", fontSize: 16 },
 
-  image: { width: "100%", height: "100%",resizeMode:"cover" },
+  image: { width: "100%", height: "100%", resizeMode: "cover" },
   gradient: { flex: 1 },
+
+  backButton: {
+    position: "absolute",
+    top: Platform.OS === "ios" ? 50 : 30,
+    left: 20,
+    zIndex: 20,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    padding: 10,
+    borderRadius: 22,
+  },
 
   profileHeader: {
     paddingHorizontal: 20,
@@ -228,7 +256,11 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 10,
   },
-  smallMapBtnText: { color: "#0A84FF", fontWeight: "700", fontSize: 12 },
+  smallMapBtnText: {
+    color: "#0A84FF",
+    fontWeight: "700",
+    fontSize: 12,
+  },
 
   footer: {
     position: "absolute",
@@ -244,5 +276,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     elevation: 8,
   },
-  bookButtonText: { color: "#fff", fontSize: 18, fontWeight: "700" },
+  bookButtonText: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "700",
+  },
 });
