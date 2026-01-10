@@ -4,8 +4,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Swiper from "react-native-swiper";
 import { useRef, useState } from 'react';
-
-import  Swiiper  from './data/swiper.js';
+import Slade from "./data/swiper";
 
 export default function HomeScreen() {
   const swiperRef = useRef(null);
@@ -26,7 +25,7 @@ export default function HomeScreen() {
           activeDot={<View style={styles.activeDot} />}
         >
         
-          {Swiiper.map((item, index) => (
+          {Slade.map((item, index) => (
             <View key={index} style={styles.parent}>
 
               <View style={styles.imageContainer}>
@@ -50,8 +49,8 @@ export default function HomeScreen() {
               </View>
 
               {/* Button only last slide */}
-              {active === Swiiper.length - 1 &&
-                index === Swiiper.length - 1 && (
+              {active === Slade.length - 1 &&
+                index === Slade.length - 1 && (
                   <TouchableOpacity
                     style={styles.button}
                     onPress={() => router.push('./register')}

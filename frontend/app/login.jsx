@@ -11,7 +11,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 
-import { useLogin } from "../servis/login/mutation.js";
+import { useLogin } from "../servis/login/mutaion.js";
 import useAuthStore from "../stor/login-store.js";
 
 export default function LoginScreen() {

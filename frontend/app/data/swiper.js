@@ -1,5 +1,5 @@
 
-const Swiiper = [
+const Slade = [
     {
       id:1,
       image:"https://i.pinimg.com/736x/89/40/3c/89403ced99ed7bd7034337b3f2891d9f.jpg",
@@ -22,5 +22,5 @@ const Swiiper = [
         'Get the best healthcare experience from your mobile.',
     },
   ];
-  export default Swiiper;
+  export default Slade;
   
