@@ -13,7 +13,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import { useCreateDoctor } from "../../servis/doctor/mutation.js";
-import useCreateDoctorStore from "../../stor/register-store";
+import  useCreateDoctorStore  from "../../stor/register-store.js";
 
 export default function DoctorInfoScreen() {
   const { doctor, setDoctorField, resetDoctor } = useCreateDoctorStore();
@@ -23,13 +23,30 @@ export default function DoctorInfoScreen() {
     if (!doctor?.fullName || !doctor?.speciality || !doctor?.workTime) {
       return alert("Please fill required fields");
     }
-
+  
+    if (!doctor.latitude || !doctor.longitude) {
+      return alert("Please choose location on map 📍");
+    }
+  
     createDoctor.mutate(
       {
         ...doctor,
-        price: (doctor.price),
-        experience:(doctor.experience),
-        consultationDuration:(doctor.consultationDuration),
+  
+        // 🔢 تحويل الأرقام
+        experience: doctor.experience
+          ? Number(doctor.experience)
+          : null,
+  
+        consultationDuration: doctor.consultationDuration
+          ? Number(doctor.consultationDuration)
+          : null,
+  
+        price: doctor.price
+          ? Number(doctor.price)
+          : null,
+  
+        latitude: Number(doctor.latitude),
+        longitude: Number(doctor.longitude),
       },
       {
         onSuccess: () => {
@@ -38,12 +55,13 @@ export default function DoctorInfoScreen() {
           router.replace("/(tabs)/dashbord");
         },
         onError: (error) => {
+          console.log(error);
           alert(error?.message || "Something went wrong");
         },
       }
     );
   };
-
+  
   return (
     <LinearGradient colors={["#eaf6ff", "#ffffff"]} style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>

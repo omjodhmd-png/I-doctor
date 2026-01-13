@@ -1,27 +1,19 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { instance } from "../../servis/instance.js"; // افترض أن هاد instance معمول مسبقاً
+import { useMutation } from "@tanstack/react-query";
+import { instance } from "../instance.js";
+import  useAuthStore  from "../../stor/login-store.js";
 
-export const useCreateBooking = () => {
-  const queryClient = useQueryClient();
+export function useCreateDoctor() {
+    
+  const token = useAuthStore((state) => state.token);
 
   return useMutation({
-    mutationFn: async (bookingData) => {
-      // جلب التوكن
-      const token = await AsyncStorage.getItem("token");
-
-      // إرسال البيانات للخادم
-      const res = await instance.post("/bookings", bookingData, {
+    mutationFn: async (doctorData) => {
+      const res = await instance.post("/doctors", doctorData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
-      return res.data; // ترجاع البيانات من الخادم
-    },
-    onSuccess: () => {
-      // بعد نجاح الحجز، نجدد قائمة الحجوزات
-      queryClient.invalidateQueries(["myBookings"]);
+      return res.data;
     },
   });
-};
+}

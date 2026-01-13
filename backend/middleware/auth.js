@@ -19,8 +19,8 @@ export const authMiddleware = (req, res, next) => {
       process.env.JWT_SECRET
     );
 
-    // مثال: { id, role, email }
     req.user = decoded;
+    console.log(req.user);
 
     next();
   } catch (error) {
