@@ -50,8 +50,7 @@ export const getDoctorById = async (req, res) => {
 export const createDoctor = async (req, res) => {
   try {
 
-    console.log("REQ.BODY 👉", req.body);
-    console.log("REQ.USER 👉", req.user);
+   
 
     const existingDoctor = await Doctor.findOne({ where: { userId: req.user.id } });
     if (existingDoctor) {
