@@ -7,10 +7,11 @@ import {
   cancelBooking,
   updateBookingStatus,
   getDoctorTotalBookings,
-  getDoctorConfirmedToday,
   getDoctorBookingsSorted
 } from "../controllers/bookingController.js";
 import { authMiddleware } from "../middleware/auth.js";
+import { roleMiddleware } from "../middleware/roleMiddleware.js";
+
 
 const router = express.Router();
 
@@ -23,9 +24,8 @@ router.get("/my", authMiddleware, getMyBookings);
 // Get doctor bookings
 router.get("/doctor", authMiddleware, getDoctorBookings);
 
-router.get("/doctor/:doctorId/total-bookings",authMiddleware,getDoctorTotalBookings);
+router.get("/doctor/:doctorId/total-bookings",authMiddleware,roleMiddleware("doctor"),getDoctorTotalBookings);
 
-router.get("/doctor/:doctorId/confirmed-today",authMiddleware,getDoctorConfirmedToday);
 
 router.get("/doctor/bookings",authMiddleware,getDoctorBookingsSorted);
 

@@ -47,14 +47,36 @@ export const getDoctorById = async (req, res) => {
 };
 
 
-
-
 export const createDoctor = async (req, res) => {
-   try {
-     const doctors = await Doctor.create(req.body);
-     res.status(201).json(doctors);
-   } catch (error) {
-     res.status(500).json({ message: error.message });
-   }
- };
- 
+  try {
+
+    console.log("REQ.BODY 👉", req.body);
+    console.log("REQ.USER 👉", req.user);
+
+    const existingDoctor = await Doctor.findOne({ where: { userId: req.user.id } });
+    if (existingDoctor) {
+      return res.status(400).json({ message: "Doctor profile already exists" });
+    }
+
+    // 🔹 تحقق من latitude / longitude
+    if (!req.body.latitude || !req.body.longitude) {
+      return res.status(400).json({ message: "Please choose location" });
+    }
+
+
+    const doctor = await Doctor.create({
+      ...req.body,
+
+      // ⬅️ ضروري يجي من التوكن
+      userId: req.user.id,
+
+     
+    });
+
+    res.status(201).json(doctor);
+  } catch (error) {
+    console.error("CREATE DOCTOR ERROR ❌", error);
+    res.status(500).json({ message: error.message });
+  }
+};
+

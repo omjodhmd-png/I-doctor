@@ -95,14 +95,19 @@ export const getDoctorTotalBookings = async (req, res) => {
   try {
     const { doctorId } = req.params;
 
-    // security: غير الطبيب يشوف راسو
-    if (req.user.role !== "doctor" || req.user.id != doctorId) {
+    const doctor = await Doctor.findByPk(doctorId);
+    if (!doctor) {
+      return res.status(404).json({ message: "Doctor not found" });
+    }
+
+    // security: user اللي هو owner ديال هاد doctor فقط
+    if (req.user.role !== "doctor" || doctor.userId !== req.user.id) {
       return res.status(403).json({ message: "Not authorized" });
     }
 
     const total = await Booking.count({
       where: { doctorId },
-    });  
+    });
 
     res.json({ totalBookings: total });
   } catch (error) {
@@ -112,31 +117,7 @@ export const getDoctorTotalBookings = async (req, res) => {
 };
 
 
-export const getDoctorConfirmedToday = async (req, res) => {
-  try {
-    const { doctorId } = req.params;
 
-    // غير الطبيب يشوف راسو
-    if (req.user.role !== "doctor" || req.user.id != doctorId) {
-      return res.status(403).json({ message: "Not authorized" });
-    }
-
-    const today = new Date().toISOString().split("T")[0];
-
-    const total = await Booking.count({
-      where: {
-        doctorId,
-        status: "Confirmed",
-        bookingDate: today,
-      },
-    });
-
-    res.json({ confirmedToday: total });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server error" });
-  }
-};
 
 export const getDoctorBookingsSorted = async (req, res) => {
   try {

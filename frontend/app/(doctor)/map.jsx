@@ -5,9 +5,9 @@ import useCreateDoctorStore from "../../stor/register-store";
 import useAuthStore from "../../stor/login-store.js";
 
 export default function MapScreen() {
-    const {doctor,setDoctorField} = useCreateDoctorStore()
-    const {token} = useAuthStore()
-    console.log(token);
+  const { doctor, setDoctorField } = useCreateDoctorStore()
+  const { token } = useAuthStore()
+  console.log(token);
 
   return (
     <View style={{ flex: 1 }}>
@@ -19,12 +19,16 @@ export default function MapScreen() {
           latitudeDelta: 0.05,
           longitudeDelta: 0.05,
         }}
-        onPress={(e) =>{
-           setDoctorField("longitude",e.nativeEvent.coordinate.longitude)
-           setDoctorField("latitude",e.nativeEvent.coordinate.latitude)
-          }}
+        onPress={(e) => {
+          const { latitude, longitude } = e.nativeEvent.coordinate;
+          console.log("📍 الموقع اللي ختاريتي هو:");
+          console.log("Latitude: ", latitude);
+          console.log("Longitude: ", longitude);
+          setDoctorField("longitude", Number(e.nativeEvent.coordinate.longitude))
+          setDoctorField("latitude", Number(e.nativeEvent.coordinate.latitude))
+        }}
       >
-        {doctor?.latitude && doctor?.longitude && <Marker coordinate={{latitude:doctor.latitude,longitude:doctor.longitude}} />}
+        {doctor?.latitude && doctor?.longitude && <Marker coordinate={{ latitude: doctor.latitude, longitude: doctor.longitude }} />}
       </MapView>
 
       <TouchableOpacity

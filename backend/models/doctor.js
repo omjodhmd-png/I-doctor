@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/db.js";
+import User from "./user.js"; // تأكد من المسار الصحيح لملف المستخدم
 
 const Doctor = sequelize.define(
   "Doctor",
@@ -8,6 +9,17 @@ const Doctor = sequelize.define(
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
+    },
+
+    // ⬇️ هاد الحقل هو اللي كان ناقصك وهو اللي رابط الدكتور بالحساب ديالو
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      unique: true, // كل مستخدم عنده بروفايل دكتور واحد
+      references: {
+        model: "user", // سمية الجدول في قاعدة البيانات
+        key: "id",
+      },
     },
 
     fullName: {
@@ -36,12 +48,12 @@ const Doctor = sequelize.define(
     },
 
     experience: {
-      type: DataTypes.INTEGER, // سنوات الخبرة
+      type: DataTypes.INTEGER,
       allowNull: true,
     },
 
     languages: {
-      type: DataTypes.STRING, // مثال: "Arabic, French, English"
+      type: DataTypes.STRING,
       allowNull: true,
     },
 
@@ -51,12 +63,12 @@ const Doctor = sequelize.define(
     },
 
     availabilityDays: {
-      type: DataTypes.STRING, // مثال: "Mon - Fri"
+      type: DataTypes.STRING,
       allowNull: true,
     },
 
     consultationDuration: {
-      type: DataTypes.INTEGER, // بالدقائق
+      type: DataTypes.INTEGER,
       allowNull: true,
     },
 
@@ -105,5 +117,11 @@ const Doctor = sequelize.define(
     tableName: "doctors",
   }
 );
+
+/* --- العلاقات (Associations) --- */
+
+// المستخدم عنده دكتور واحد (One-to-One)
+User.hasOne(Doctor, { foreignKey: "userId", onDelete: "CASCADE" });
+Doctor.belongsTo(User, { foreignKey: "userId" });
 
 export default Doctor;
