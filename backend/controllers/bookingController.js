@@ -2,6 +2,8 @@ import Booking from "../models/booking.js";
 import Doctor from "../models/doctor.js";
 import User from "../models/user.js";
 import { Op } from "sequelize";
+import { Sequelize } from "sequelize";
+
 
 /**
  * ✅ Create new booking
@@ -91,64 +93,70 @@ export const getDoctorBookings = async (req, res) => {
   }
 };
 
+
 export const getDoctorTotalBookings = async (req, res) => {
   try {
-    const { doctorId } = req.params;
+    // كنجيبو الطبيب انطلاقا من الـ id ديال المستخدم اللي مسجل الدخول
+    const doctor = await Doctor.findOne({ where: { userId: req.user.id } });
 
-    const doctor = await Doctor.findByPk(doctorId);
     if (!doctor) {
       return res.status(404).json({ message: "Doctor not found" });
     }
 
-    // security: user اللي هو owner ديال هاد doctor فقط
-    if (req.user.role !== "doctor" || doctor.userId !== req.user.id) {
-      return res.status(403).json({ message: "Not authorized" });
-    }
-
     const total = await Booking.count({
-      where: { doctorId },
+      where: { doctorId: doctor.id },
     });
 
     res.json({ totalBookings: total });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: "Server error" });
   }
 };
+
 
 
 
 
 export const getDoctorBookingsSorted = async (req, res) => {
   try {
-    const doctorId = req.user.id;
-
-    // غير الطبيب
+    // 1. التأكد من أن المستخدم طبيب
     if (req.user.role !== "doctor") {
-      return res.status(403).json({ message: "Not authorized" });
+      return res.status(403).json({ message: "غير مصرح لك بالدخول" });
     }
 
+    // 2. البحث عن id الطبيب باستخدام id المستخدم الموجود في التوكن
+    const doctor = await Doctor.findOne({ 
+      where: { userId: req.user.id } 
+    });
+
+    if (!doctor) {
+      return res.status(404).json({ message: "لم يتم العثور على ملف طبيب لهذا المستخدم" });
+    }
+
+    const doctorId = doctor.id; // الآن لدينا المعرف الصحيح (رقم 5 في مثالك)
+
+    // 3. جلب المواعيد وترتيبها
     const bookings = await Booking.findAll({
       where: { doctorId },
       include: [{ model: User, attributes: ["id", "fullName"] }],
       order: [
-        ["bookingDate", "DESC"], // آخر تاريخ يطلع الأول
-        ["bookingTime", "DESC"], // آخر وقت يطلع الأول
+        ['bookingDate', 'DESC'], // الترتيب من الأحدث للأقدم
+        ['bookingTime', 'DESC']
       ],
     });
 
     res.json(bookings);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server error" });
+    console.error("Error in getDoctorBookingsSorted:", error);
+    res.status(500).json({ message: "خطأ في الخادم" });
   }
 };
+
 
 /**
  * 🔄 Update booking status
  * Doctor confirms or cancels
- */
-export const updateBookingStatus = async (req, res) => {
+ */export const updateBookingStatus = async (req, res) => {
   try {
     const { id } = req.params;
     const { status } = req.body;
@@ -157,25 +165,35 @@ export const updateBookingStatus = async (req, res) => {
       return res.status(400).json({ message: "Invalid status" });
     }
 
-    const booking = await Booking.findByPk(id);
+    const booking = await Booking.findByPk(id, {
+      include: [{ model: Doctor }],
+    });
+
     if (!booking) {
       return res.status(404).json({ message: "Booking not found" });
     }
 
-    // Only doctor can confirm/cancel
-    if (req.user.role !== "doctor" || req.user.id !== booking.doctorId) {
+    // ✅ فقط الطبيب لي عندو نفس userId يقدر يبدل الحالة
+    if (
+      req.user.role !== "doctor" ||
+      booking.Doctor.userId !== req.user.id
+    ) {
       return res.status(403).json({ message: "Not authorized" });
     }
 
     booking.status = status;
     await booking.save();
 
-    res.json({ message: "Booking status updated", booking });
+    res.json({
+      message: "Booking status updated successfully",
+      booking,
+    });
   } catch (error) {
-    console.error(error);
+    console.error("UPDATE BOOKING STATUS ERROR ❌", error);
     res.status(500).json({ message: "Server error" });
   }
 };
+
 
 
 
@@ -187,24 +205,29 @@ export const cancelBooking = async (req, res) => {
     const { id } = req.params;
 
     const booking = await Booking.findByPk(id);
+
     if (!booking) {
       return res.status(404).json({ message: "Booking not found" });
     }
 
-    // Only user who created the booking can cancel
-    if (req.user.role !== "user" || req.user.id !== booking.userId) {
+    // ✅ غير user لي دار booking يقدر يلغي
+    if (req.user.role !== "user" || booking.userId !== req.user.id) {
       return res.status(403).json({ message: "Not authorized" });
     }
 
     booking.status = "Cancelled";
     await booking.save();
 
-    res.json({ message: "Booking cancelled successfully", booking });
+    res.json({
+      message: "Booking cancelled successfully",
+      booking,
+    });
   } catch (error) {
-    console.error(error);
+    console.error("CANCEL BOOKING ERROR ❌", error);
     res.status(500).json({ message: "Server error" });
   }
 };
+
 
 /**
  * 🔍 Get booking by ID
@@ -214,21 +237,35 @@ export const getBookingById = async (req, res) => {
     const { id } = req.params;
 
     const booking = await Booking.findByPk(id, {
-      include: [{ model: Doctor }, { model: User }],
+      include: [
+        {
+          model: Doctor,
+          attributes: ["id", "fullName", "userId"],
+        },
+        {
+          model: User,
+          attributes: ["id", "fullName", "email"],
+        },
+      ],
     });
 
     if (!booking) {
       return res.status(404).json({ message: "Booking not found" });
     }
 
-    // Only user or doctor involved can see
-    if (req.user.id !== booking.userId && req.user.id !== booking.doctorId) {
+    // ✅ user لي دار booking أو doctor ديالو فقط
+    const isUser = req.user.id === booking.userId;
+    const isDoctor =
+      req.user.role === "doctor" &&
+      booking.Doctor.userId === req.user.id;
+
+    if (!isUser && !isDoctor) {
       return res.status(403).json({ message: "Not authorized" });
     }
 
     res.json(booking);
   } catch (error) {
-    console.error(error);
+    console.error("GET BOOKING BY ID ERROR ❌", error);
     res.status(500).json({ message: "Server error" });
   }
 };

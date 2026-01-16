@@ -15,6 +15,7 @@ import { router } from "expo-router";
 import { useCreateDoctor } from "../../servis/doctor/mutation.js";
 import  useCreateDoctorStore  from "../../stor/register-store.js";
 
+
 export default function DoctorInfoScreen() {
   const { doctor, setDoctorField, resetDoctor } = useCreateDoctorStore();
   const createDoctor = useCreateDoctor();

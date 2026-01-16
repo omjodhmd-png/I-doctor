@@ -21,7 +21,6 @@ export default function MapScreen() {
         }}
         onPress={(e) => {
           const { latitude, longitude } = e.nativeEvent.coordinate;
-          console.log("📍 الموقع اللي ختاريتي هو:");
           console.log("Latitude: ", latitude);
           console.log("Longitude: ", longitude);
           setDoctorField("longitude", Number(e.nativeEvent.coordinate.longitude))
