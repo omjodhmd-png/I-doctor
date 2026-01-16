@@ -18,7 +18,6 @@ import moment from "moment";
 export default function BookingScreen() {
   const { id: doctorId, name: doctorName } = useLocalSearchParams();
   console.log("Booking doctorId:", doctorId, "parsed:", parseInt(doctorId));
-  console.log("useLocalSearchParams:", useLocalSearchParams());
 
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState(new Date());
