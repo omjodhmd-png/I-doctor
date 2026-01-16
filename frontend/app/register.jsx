@@ -11,6 +11,7 @@ import useAuthStore from "../stor/login-store.js";
 
 
 export default function SignupScreen() {
+  
   const [secure, setSecure] = useState(true);
   const [agree, setAgree] = useState(false);
   const [fullName, setFullName] = useState("");
