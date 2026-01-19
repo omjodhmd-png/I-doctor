@@ -8,7 +8,7 @@
 **Target Version:** MVP – Simple & Educational
 
 **Main Objective:**
-The goal of the iDoctor application is to simplify the interaction between patients and doctors by providing an easy-to-use mobile platform for searching doctors, booking appointments, and communicating through basic chat consultation.
+The goal of the iDoctor application is to simplify the interaction between patients and doctors by providing an easy-to-use mobile platform for searching doctors, booking appointments.
 
 ---
 
@@ -19,15 +19,11 @@ The goal of the iDoctor application is to simplify the interaction between patie
 * Search for doctors by specialty
 * View doctor profiles
 * Book medical appointments
-* Chat with doctors
-* Manage personal profile
 
 ### 🧑‍⚕️ Doctor
 
 * Create professional profile
-* Manage availability
 * View and confirm appointments
-* Chat with patients
 
 ## 3. Scope of the Application
 
@@ -39,10 +35,10 @@ This version of iDoctor is intentionally kept simple and focuses only on the cor
 
 ### 4.1 Authentication & Authorization
 
-* User registration (Patient / Doctor)
+* User registration (user / Doctor)
 * User login with email and password
 * Secure authentication using JWT
-* Role-based access (Patient / Doctor)
+* Role-based access (user / Doctor)
 
 ### 4.2 Doctor Management
 
@@ -56,16 +52,6 @@ This version of iDoctor is intentionally kept simple and focuses only on the cor
 * Doctors can view appointment requests
 * Appointment status: pending / confirmed
 
-### 4.4 Consultation (Chat)
-
-* Simple text-based chat
-* One-to-one conversation between patient and doctor
-* Messages stored in database
-
-### 4.5 Notifications (Basic)
-
-* Appointment confirmation feedback
-* Simple in-app alerts
 
 ---
 
@@ -78,7 +64,6 @@ This version of iDoctor is intentionally kept simple and focuses only on the cor
 
 ---
 
-## 6. Application Screens (10 Screens)
 
 ### 1️⃣ Splash Screen
 
@@ -88,26 +73,23 @@ This version of iDoctor is intentionally kept simple and focuses only on the cor
 ### 2️⃣ Onboarding Screens
 
 * Short introduction to app features
-* Skip button
 
 ### 3️⃣ Login Screen
 
 * Email input
 * Password input
 * Login button
-* Forgot password link
 
 ### 4️⃣ Register Screen
 
 * Full Name
 * Email
 * Password
-* Confirm Password
-* Role selection (Patient / Doctor)
+* Role selection (user/ Doctor)
 
 ### 5️⃣ Home Screen
 
-* Search bar
+* Search icon
 * List of doctors
 * Filter by specialty
 
@@ -130,19 +112,6 @@ This version of iDoctor is intentionally kept simple and focuses only on the cor
 * List of booked appointments
 * Appointment status
 
-### 9️⃣ Chat Consultation Screen
-
-* Text messages
-* Real-time feel (basic)
-
-### 🔟 Profile Screen
-
-* User information
-* Edit profile
-* Logout
-
----
-
 ## 7. Data Models (Simplified)
 
 ### User
@@ -161,7 +130,7 @@ This version of iDoctor is intentionally kept simple and focuses only on the cor
 * description
 * availability
 
-### Appointment
+### booking
 
 * id
 * patientId
@@ -170,22 +139,13 @@ This version of iDoctor is intentionally kept simple and focuses only on the cor
 * time
 * status
 
-### Message
 
-* id
-* senderId
-* receiverId
-* content
-* timestamp
-
----
 
 ## 8. Suggested Technologies
 
 ### Frontend
 
 * React Native / Expo
-* TypeScript
 
 ### Backend
 
@@ -194,7 +154,7 @@ This version of iDoctor is intentionally kept simple and focuses only on the cor
 
 ### Database
 
-* MongoDB or PostgreSQL
+*  PostgreSQL
 
 ### Authentication
 
@@ -206,20 +166,12 @@ This version of iDoctor is intentionally kept simple and focuses only on the cor
 
 * Password encryption (bcrypt)
 * JWT-based authentication
-* Input validation
+* Input validation zod
 * Role-based authorization
 
 ---
 
-## 10. Future Improvements (Out of Scope)
 
-* Video consultations
-* Online payment system
-* Push notifications
-* Advanced medical records
-* Rating & reviews
-
----
 
 ## 11. Conclusion
 
