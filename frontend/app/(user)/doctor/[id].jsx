@@ -11,12 +11,15 @@ import {
   ImageBackground,
   Platform,
 } from "react-native";
+
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { useGetDoctor } from "../../../servis/doctor/qurey.js";
 
+
 const { width } = Dimensions.get("window");
+
 
 export default function DoctorDetailScreen() {
   const { id } = useLocalSearchParams();
