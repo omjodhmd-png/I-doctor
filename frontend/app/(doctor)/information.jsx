@@ -33,7 +33,6 @@ export default function DoctorInfoScreen() {
       {
         ...doctor,
   
-        // 🔢 تحويل الأرقام
         experience: doctor.experience
           ? Number(doctor.experience)
           : null,
@@ -51,7 +50,7 @@ export default function DoctorInfoScreen() {
       },
       {
         onSuccess: () => {
-          alert("Doctor profile created successfully ✅");
+          alert("Doctor profile created successfully ");
           resetDoctor();
           router.replace("/(tabs)/dashbord");
         },
@@ -77,40 +76,31 @@ export default function DoctorInfoScreen() {
           >
             <Text style={styles.title}>Doctor Information</Text>
 
-            {/* BASIC INFO */}
             <Input label="Full Name" value={doctor?.fullName} onChange={(v) => setDoctorField("fullName", v)} />
             <Input label="Speciality" value={doctor?.speciality} onChange={(v) => setDoctorField("speciality", v)} />
             <Input label="Clinic Name" value={doctor?.clinicName} onChange={(v) => setDoctorField("clinicName", v)} />
 
-            {/* BIO */}
             <TextArea label="Bio" value={doctor?.bio} onChange={(v) => setDoctorField("bio", v)} />
 
-            {/* EXPERIENCE */}
             <Input label="Experience (years)" value={doctor?.experience} keyboard="numeric" onChange={(v) => setDoctorField("experience", v)} />
 
-            {/* LANGUAGES */}
             <Input label="Languages (Arabic, French...)" value={doctor?.languages} onChange={(v) => setDoctorField("languages", v)} />
 
-            {/* WORK */}
             <Input label="Work Time" value={doctor?.workTime} onChange={(v) => setDoctorField("workTime", v)} />
             <Input label="Availability Days" value={doctor?.availabilityDays} onChange={(v) => setDoctorField("availabilityDays", v)} />
             <Input label="Consultation Duration (min)" value={doctor?.consultationDuration} keyboard="numeric" onChange={(v) => setDoctorField("consultationDuration", v)} />
 
-            {/* CONTACT */}
             <Input label="Phone" value={doctor?.phone} keyboard="phone-pad" onChange={(v) => setDoctorField("phone", v)} />
             <Input label="Price" value={doctor?.price} keyboard="numeric" onChange={(v) => setDoctorField("price", v)} />
 
-            {/* ADDRESS */}
             <Input label="Address" value={doctor?.address} editable={false} />
 
             <TouchableOpacity style={styles.mapButton} onPress={() => router.push("/map")}>
               <Text style={styles.buttonText}>Choose Location on Map</Text>
             </TouchableOpacity>
 
-            {/* CERTIFICATIONS */}
             <TextArea label="Certifications" value={doctor?.certifications} onChange={(v) => setDoctorField("certifications", v)} />
 
-            {/* SAVE */}
             <TouchableOpacity style={styles.saveButton} onPress={handleSubmit}>
               <Text style={styles.buttonText}>
                 {createDoctor.isLoading ? "Saving..." : "Save Information"}
@@ -124,7 +114,6 @@ export default function DoctorInfoScreen() {
   );
 }
 
-/* -------- REUSABLE INPUTS -------- */
 
 const Input = ({ label, value, onChange, keyboard, editable = true }) => (
   <View style={styles.inputBox}>
@@ -151,7 +140,6 @@ const TextArea = ({ label, value, onChange }) => (
   </View>
 );
 
-/* -------- STYLES -------- */
 
 const styles = StyleSheet.create({
   container: {

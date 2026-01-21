@@ -34,10 +34,8 @@ export default function SignupScreen() {
       { fullName, email, password, role },
       {
         onSuccess: (data) => {
-          console.log("REGISTER RESPONSE 👉", data);
   
           if (data.token && data.user) {
-            // Correct object format
             setAuth({
               token: data.token,
               user: { ...data.user, role: data.role },
@@ -72,12 +70,10 @@ export default function SignupScreen() {
         <Text style={styles.subtitle}>
           You can search course, apply course and find scholarship for abroad studies
         </Text>
-        {/* Role selection */}
         
 
 
 
-        {/* Inputs */}
         <View style={styles.inputBox}>
           <TextInput
             placeholder="Name"
@@ -148,7 +144,6 @@ export default function SignupScreen() {
 
 
 
-        {/* Terms */}
         <TouchableOpacity style={styles.terms} onPress={() => setAgree(!agree)}>
           <View style={[styles.checkbox, agree && styles.checked]} />
           <Text style={styles.termsText}>
@@ -156,14 +151,12 @@ export default function SignupScreen() {
           </Text>
         </TouchableOpacity>
 
-        {/* Button */}
         <TouchableOpacity style={styles.button} onPress={handleRegister}>
           <Text style={styles.buttonText}>
             {creatUser.isLoading ? "Registering..." : "Sign up"}
           </Text>
         </TouchableOpacity>
 
-        {/* Login */}
         <Text style={styles.loginText}>
           <TouchableOpacity onPress={() => router.push("./login")}>
             <Text style={styles.loginLink}> Log in</Text>

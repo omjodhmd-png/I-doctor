@@ -30,16 +30,15 @@ export const register = async (req, res) => {
       role: userRole,
     });
 
-    // 🔑 Generate JWT token
     const token = jwt.sign(
       { id: user.id, role: user.role },
       process.env.JWT_SECRET,
-      { expiresIn: "7d" } // صلاحية أسبوع
+      { expiresIn: "7d" } 
     );
-
+  
     res.status(201).json({
       message: "User registered successfully",
-      token, // 🟢 هنا كنرسل token
+      token, 
       role: user.role,
       user: {
         id: user.id,
@@ -58,14 +57,11 @@ export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // 1️⃣ Validation
     if (!email || !password) {
       return res.status(400).json({
         message: "Email and password are required",
       });
     }
-
-    // 2️⃣ Find user
     const user = await User.findOne({ where: { email } });
     if (!user) {
       return res.status(404).json({
@@ -73,7 +69,6 @@ export const login = async (req, res) => {
       });
     }
 
-    // 3️⃣ Compare password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({
@@ -81,14 +76,12 @@ export const login = async (req, res) => {
       });
     }
 
-    // 4️⃣ Get doctorId if user is doctor
     let doctorId = null;
     if (user.role === "doctor") {
       const doctor = await Doctor.findOne({ where: { userId: user.id } });
       doctorId = doctor?.id || null;
     }
 
-    // 5️⃣ Generate JWT token
     const token = jwt.sign(
       {
         id: user.id,
@@ -107,7 +100,7 @@ export const login = async (req, res) => {
         id: user.id,
         fullName: user.fullName,
         email: user.email,
-        doctorId, // ✅ هذا مهم باش dashboard يعرف doctorId
+        doctorId, 
       },
     });
 

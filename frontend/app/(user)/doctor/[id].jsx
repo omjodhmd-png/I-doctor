@@ -54,13 +54,13 @@ export default function DoctorDetailScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 140 }}
       >
-        {/* ---------- Image ---------- */}
+    
         <View style={{ width, height: width * 1.4 }}>
           <ImageBackground
             source={{ uri: doctor.imageUrl }}
             style={styles.image}
           >
-            {/* Back Button */}
+         
             <TouchableOpacity
               style={styles.backButton}
               onPress={() => router.back()}
@@ -75,7 +75,7 @@ export default function DoctorDetailScreen() {
           </ImageBackground>
         </View>
 
-        {/* ---------- Header ---------- */}
+
         <View style={styles.profileHeader}>
           <View>
             <Text style={styles.name}>{doctor.fullName}</Text>
@@ -90,7 +90,7 @@ export default function DoctorDetailScreen() {
           </View>
         </View>
 
-        {/* ---------- Stats ---------- */}
+   
         <View style={styles.statsRow}>
           <View style={styles.statItem}>
             <Ionicons name="briefcase-outline" size={22} color="#0A84FF" />
@@ -115,7 +115,7 @@ export default function DoctorDetailScreen() {
           </View>
         </View>
 
-        {/* ---------- About ---------- */}
+     
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>About Doctor</Text>
           <Text style={styles.bioText}>
@@ -123,7 +123,7 @@ export default function DoctorDetailScreen() {
           </Text>
         </View>
 
-        {/* ---------- Working Time ---------- */}
+   
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Working Hours</Text>
           <View style={styles.infoRow}>
@@ -137,7 +137,7 @@ export default function DoctorDetailScreen() {
           </View>
         </View>
 
-        {/* ---------- Location ---------- */}
+  
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Location</Text>
           <View style={styles.locationCard}>
@@ -156,7 +156,7 @@ export default function DoctorDetailScreen() {
         </View>
       </ScrollView>
 
-      {/* ---------- Footer ---------- */}
+
       <View style={styles.footer}>
         <TouchableOpacity
           style={styles.bookButton}
@@ -169,7 +169,7 @@ export default function DoctorDetailScreen() {
   );
 }
 
-/* ================= STYLES ================= */
+
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#F9F9F9" },

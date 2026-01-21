@@ -18,7 +18,7 @@ const seedUsers = async () => {
     console.log("✅ Users seeded successfully!");
     process.exit(0);
   } catch (err) {
-    console.error("❌ Users seeding error:", err);
+    console.error("Users seeding error:", err);
     process.exit(1);
   }
 };

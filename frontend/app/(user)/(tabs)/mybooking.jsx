@@ -1,4 +1,3 @@
-// screens/my-bookings.js
 import React, { useEffect } from "react";
 import {
   View,
@@ -34,9 +33,9 @@ export default function MyBookingsScreen() {
           onPress: async () => {
             try {
               await cancelBooking(bookingId);
-              Alert.alert("Booking cancelled successfully ✅");
+              Alert.alert("Booking cancelled successfully ");
             } catch (err) {
-              Alert.alert(err.message || "Failed to cancel booking ❌");
+              Alert.alert(err.message || "Failed to cancel booking ");
             }
           },
         },
@@ -81,7 +80,7 @@ export default function MyBookingsScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
+    
       <View style={styles.header}>
         <TouchableOpacity
           onPress={() => router.back()}
@@ -94,7 +93,7 @@ export default function MyBookingsScreen() {
         <View style={{ width: 40 }} />
       </View>
 
-      {/* محتوى الحجوزات */}
+   
       {loading ? (
         <View style={styles.loading}>
           <ActivityIndicator size="large" color="#0A84FF" />
@@ -124,7 +123,7 @@ export default function MyBookingsScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#fff" },
 
-  // Header
+ 
   header: {
     flexDirection: "row",
     alignItems: "center",
@@ -152,7 +151,7 @@ const styles = StyleSheet.create({
 
   loading: { flex: 1, justifyContent: "center", alignItems: "center" },
 
-  // Card
+  
   card: {
     backgroundColor: "#fff",
     borderRadius: 20,

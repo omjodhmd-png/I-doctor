@@ -17,7 +17,6 @@ export default function FavoritesScreen() {
   if (isError)
     return <View style={styles.center}><Text>Error fetching doctors.</Text></View>;
 
-  // filter favorite doctors
   const favoriteDoctors = data.filter((doc) => favorites.includes(doc.id));
 
   if (favoriteDoctors.length === 0)

@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 const useFavoriteStore = create((set) => ({
-  favorites: [], // ids of favorite doctors
+  favorites: [], 
   toggleFavorite: (id) =>
     set((state) => {
       const isFav = state.favorites.includes(id);

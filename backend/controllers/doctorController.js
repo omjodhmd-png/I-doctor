@@ -8,13 +8,13 @@ export const getAllDoctors = async (req, res) => {
     const { speciality, search } = req.query;
     let filter = {};
 
-    if (speciality && speciality !== "null") { // إضافة تأكد أنها ليست نص "null"
+    if (speciality && speciality !== "null") {
       filter.speciality = speciality;
     }
 
     if (search) {
       filter.fullName = {
-        [Op.like]: `%${search}%`, // تأكد من استيراد Op
+        [Op.like]: `%${search}%`,
       };
     }
 
@@ -31,11 +31,10 @@ export const getAllDoctors = async (req, res) => {
 
 
 
-// GET /doctors/:id
 export const getDoctorById = async (req, res) => {
-  const { id } = req.params; // id mn URL
+  const { id } = req.params;
   try {
-    const doctor = await Doctor.findByPk(id); // Sequelize method bach tjib by primary key
+    const doctor = await Doctor.findByPk(id); 
     if (!doctor) {
       return res.status(404).json({ message: "Doctor not found" });
     }
@@ -57,7 +56,6 @@ export const createDoctor = async (req, res) => {
       return res.status(400).json({ message: "Doctor profile already exists" });
     }
 
-    // 🔹 تحقق من latitude / longitude
     if (!req.body.latitude || !req.body.longitude) {
       return res.status(400).json({ message: "Please choose location" });
     }
@@ -66,7 +64,6 @@ export const createDoctor = async (req, res) => {
     const doctor = await Doctor.create({
       ...req.body,
 
-      // ⬅️ ضروري يجي من التوكن
       userId: req.user.id,
 
      
@@ -74,7 +71,7 @@ export const createDoctor = async (req, res) => {
 
     res.status(201).json(doctor);
   } catch (error) {
-    console.error("CREATE DOCTOR ERROR ❌", error);
+    console.error("CREATE DOCTOR ERROR ", error);
     res.status(500).json({ message: error.message });
   }
 };

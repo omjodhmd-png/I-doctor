@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/db.js";
-import User from "./user.js"; // تأكد من المسار الصحيح لملف المستخدم
+import User from "./user.js"; 
 
 const Doctor = sequelize.define(
   "Doctor",
@@ -11,13 +11,12 @@ const Doctor = sequelize.define(
       primaryKey: true,
     },
 
-    // ⬇️ هاد الحقل هو اللي كان ناقصك وهو اللي رابط الدكتور بالحساب ديالو
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      unique: true, // كل مستخدم عنده بروفايل دكتور واحد
+      unique: true, 
       references: {
-        model: "user", // سمية الجدول في قاعدة البيانات
+        model: "user",
         key: "id",
       },
     },
@@ -118,9 +117,7 @@ const Doctor = sequelize.define(
   }
 );
 
-/* --- العلاقات (Associations) --- */
 
-// المستخدم عنده دكتور واحد (One-to-One)
 User.hasOne(Doctor, { foreignKey: "userId", onDelete: "CASCADE" });
 Doctor.belongsTo(User, { foreignKey: "userId" });
 

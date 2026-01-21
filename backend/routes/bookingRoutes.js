@@ -15,22 +15,14 @@ import { roleMiddleware } from "../middleware/roleMiddleware.js";
 
 const router = express.Router();
 
-/* =========================
-   USER ROUTES
-========================= */
 
-// Create booking
+
 router.post("/", authMiddleware, createBooking);
 
-// Get my bookings (user)
 router.get("/my", authMiddleware, getMyBookings);
 
-// Cancel booking (user)
 router.patch("/:id/cancel", authMiddleware, cancelBooking);
 
-
-
-// Get doctor bookings
 router.get(
   "/doctor",
   authMiddleware,
@@ -38,7 +30,6 @@ router.get(
   getDoctorBookings
 );
 
-// Get doctor bookings sorted
 router.get(
   "/doctor/bookings",
   authMiddleware,
@@ -46,7 +37,6 @@ router.get(
   getDoctorBookingsSorted
 );
 
-// Get total bookings (doctor)
 router.get(
   "/doctor/total-bookings",
   authMiddleware,
@@ -54,7 +44,6 @@ router.get(
   getDoctorTotalBookings
 );
 
-// Update booking status (doctor)
 router.patch(
   "/:id/status",
   authMiddleware,
@@ -64,7 +53,6 @@ router.patch(
 
 
 
-// Get single booking by id
 router.get("/:id", authMiddleware, getBookingById);
 
 export default router;

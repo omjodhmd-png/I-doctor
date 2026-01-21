@@ -25,13 +25,12 @@ export default function BookingDetailsDoctorScreen() {
 
   const { user } = useAuthStore();
 
-  /* 🔹 Query لجلب التفاصيل */
   const { data: booking, isLoading, isError } = useGetBookingDetails(bookingIdNum);
 
-  /* 🔹 Mutation لتحديث الحالة */
+
   const updateStatusMutation = useUpdateBookingStatus();
 
-  /* 🔹 Handle Update Status */
+
   const handleUpdateStatus = (status) => {
     const actionText = status === "Confirmed" ? "Confirm" : "Cancel";
     
@@ -84,7 +83,6 @@ export default function BookingDetailsDoctorScreen() {
 
   return (
     <View style={styles.container}>
-      {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()} style={styles.roundBtn}>
           <Ionicons name="arrow-back" size={24} color="#0A84FF" />
@@ -94,7 +92,6 @@ export default function BookingDetailsDoctorScreen() {
       </View>
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        {/* Status Card */}
         <View style={styles.statusSection}>
           <View style={[styles.statusDot, { backgroundColor: booking.status === "Confirmed" ? "#34C759" : booking.status === "Cancelled" ? "#FF3B30" : "#FF9500" }]} />
           <Text style={styles.statusLabel}>{booking.status}</Text>
@@ -109,7 +106,6 @@ export default function BookingDetailsDoctorScreen() {
           </View>
         </View>
 
-        {/* Appointment Card */}
         <View style={styles.card}>
           <Text style={styles.sectionLabel}>APPOINTMENT DETAILS</Text>
           
@@ -144,7 +140,6 @@ export default function BookingDetailsDoctorScreen() {
           </View>
         </View>
 
-        {/* Action Buttons */}
         {isPending && (
           <View style={styles.actions}>
             <TouchableOpacity

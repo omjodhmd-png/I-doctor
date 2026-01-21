@@ -12,9 +12,7 @@ export default function HomeScreen() {
 
   return (
     <View style={{ flex: 1 }}>
-      {/* <View style={{ flex: 1 }}> */}
-
-        {/* Skip */}
+   
        
 
         <Swiper
@@ -48,7 +46,7 @@ export default function HomeScreen() {
                 <Text style={styles.dis}>{item.description}</Text>
               </View>
 
-              {/* Button only last slide */}
+            
               {active === Slade.length - 1 &&
                 index === Slade.length - 1 && (
                   <TouchableOpacity
@@ -61,12 +59,12 @@ export default function HomeScreen() {
             </View>
           ))}
         </Swiper>
-      {/* </View> */}
+     
     </View>
   );
 }
 const styles = StyleSheet.create({
-    /* pagination */
+ 
     dot: {
       backgroundColor: '#cfd8dc',
       width: 8,
@@ -82,20 +80,18 @@ const styles = StyleSheet.create({
       margin: 4,
     },
   
-    /* slide container */
+   
     parent: {
       flex: 1,
       alignItems: 'center',
-    //   marginHorizontal: 20,
-    //   marginVertical: 10,
-    //   borderRadius: 20,
+  
       backgroundColor: '#ffffff',
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 6 },
       shadowOpacity: 0.15,
     },
   
-    /* image section */
+   
     imageContainer: {
       height: 500,
       width: '100%',
@@ -123,7 +119,7 @@ const styles = StyleSheet.create({
       borderRadius: 180,
     },
   
-    /* text */
+
     h1: {
       fontWeight: 'bold',
       fontSize: 22,
@@ -144,7 +140,7 @@ const styles = StyleSheet.create({
       lineHeight: 20,
     },
   
-    /* button */
+   
     button: {
       backgroundColor: '#0A84FF',
       width: 160,

@@ -2,12 +2,12 @@ import { instance } from "../instance.js";
 import { useQuery } from "@tanstack/react-query";
 import useAuthStore from "../../stor/login-store.js";
 
-// جلب تفاصيل حجز واحد (مهم بزاف لصفحة الـ Details)
+
 export const useGetBookingDetails = (bookingId) => {
   const token = useAuthStore.getState().token;
 
   return useQuery({
-    queryKey: ["booking-details", Number(bookingId)], // توحيد الـ ID كـ Number
+    queryKey: ["booking-details", Number(bookingId)],
     queryFn: async () => {
       const res = await instance.get(`/bookings/${bookingId}`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -18,7 +18,7 @@ export const useGetBookingDetails = (bookingId) => {
   });
 };
 
-// جلب قائمة الحجوزات (نقدروا نسميوها Sorted يلا كان الـ Backend كيرجعهم مرتبين)
+
 export function useGetDoctorBookings() {
   const token = useAuthStore.getState().token;
 
@@ -34,7 +34,7 @@ export function useGetDoctorBookings() {
   });
 }
 
-// جلب إحصائيات أو مجموع الحجوزات
+
 export function useGetDoctorTotalBookings() {
   const token = useAuthStore.getState().token;
 

@@ -3,8 +3,7 @@ export const validate = (schema) => (req, res, next) => {
       schema.parse(req.body);
       next();
     } catch (error) {
-        console.log("❌ Validation Error:", error.issues); // <--- زيد هاد السطر
-      // Zod كيحط الأخطاء في error.issues
+        console.log(" Validation Error:", error.issues);
       if (error.issues) {
         const errorMessages = error.issues.map((issue) => ({
           field: issue.path[0],
@@ -17,7 +16,6 @@ export const validate = (schema) => (req, res, next) => {
         });
       }
   
-      // يلا كان شي خطأ آخر من غير Zod
       return res.status(400).json({
         success: false,
         message: "Validation failed",

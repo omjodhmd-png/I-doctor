@@ -1,8 +1,8 @@
-import { instance } from "../instance.js"; // تأكد من export default في instance.js
+import { instance } from "../instance.js";
 import { useQuery } from "@tanstack/react-query";
 
 export function useGetAllDoctors(params = {}) {
-  // تصحيح استخراج القيم
+ 
   const speciality = typeof params === 'string' ? params : params?.speciality || null;
   const search = typeof params === 'object' ? params?.search || "" : "";
 
@@ -12,7 +12,7 @@ export function useGetAllDoctors(params = {}) {
       try {
         const res = await instance.get("/doctors", {
           params: { 
-            // نرسل البارامترات فقط إذا كانت موجودة
+          
             ...(speciality && { speciality }),
             ...(search && { search })
           },
@@ -23,7 +23,7 @@ export function useGetAllDoctors(params = {}) {
         throw error;
       }
     },
-    retry: 1, // يحاول مرة واحدة إضافية قبل إظهار الخطأ
+    retry: 1, 
   });
 }
 

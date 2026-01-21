@@ -24,23 +24,21 @@ export default function DoctorDashboardScreen() {
   const router = useRouter();
   const { user } = useAuthStore();
 
-  /* 🔹 جلب إجمالي الحجوزات */
   const { 
     data: totalData, 
     isLoading: totalLoading 
   } = useGetDoctorTotalBookings();
 
-  /* 🔹 جلب قائمة الحجوزات (Sorted) */
   const {
     data: bookingsData,
     isLoading: bookingsLoading,
     isError: bookingsError,
-    refetch, // تقدر تستعملها يلا بغيتي تدير Pull to Refresh
+    refetch, 
   } = useGetDoctorBookings();
 
   const totalBookings = totalData?.totalBookings || 0;
 
-  /* 🔹 تصميم كل حجز في القائمة */
+
   const renderBooking = ({ item }) => {
     return (
       <TouchableOpacity
@@ -89,7 +87,6 @@ export default function DoctorDashboardScreen() {
     );
   };
 
-  /* 🔹 حالات التحميل والخطأ */
   if (totalLoading || bookingsLoading) {
     return (
       <View style={styles.center}>
@@ -148,7 +145,7 @@ export default function DoctorDashboardScreen() {
         data={bookingsData}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderBooking}
-        scrollEnabled={false} // حيت دايرين ScrollView برا
+        scrollEnabled={false} 
         contentContainerStyle={{ paddingBottom: 20 }}
         ListEmptyComponent={
           <Text style={styles.emptyText}>No bookings found today.</Text>
@@ -181,7 +178,7 @@ const styles = StyleSheet.create({
     width: width * 0.9,
     backgroundColor: "#fff",
     alignSelf: "center",
-    marginTop: -25, // باش يجي طالع فوق الـ header شوية
+    marginTop: -25, 
     borderRadius: 20,
     padding: 20,
     alignItems: "center",

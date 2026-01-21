@@ -18,7 +18,6 @@ import { useGetAllDoctors } from "../../../servis/doctor/qurey.js";
 
 const { width } = Dimensions.get("window");
 
-// Icons Mapping
 const categoryIcons = {
   Cardiologist: "heart-pulse",
   Dermatologist: "face-man-profile",
@@ -36,11 +35,9 @@ export default function HomeScreen() {
 
   const categories = Object.keys(categoryIcons);
 
-  // دالة لتنظيف البيانات وتجنب الأخطاء
   const cleanDoctorsData = Array.isArray(doctors) ? doctors.filter(doc => doc !== null && doc !== undefined) : [];
 
   const renderDoctorItem = ({ item }) => {
-    // حماية إضافية داخل Render
     if (!item) return null;
 
     const isFav = favorites?.includes(item.id);
@@ -99,7 +96,6 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* ===== Header ===== */}
       <View style={styles.header}>
         <View>
           <Text style={styles.hello}>Hi,</Text>
@@ -118,7 +114,6 @@ export default function HomeScreen() {
         </View>
       </View>
 
-      {/* ===== Categories ===== */}
       <View style={styles.sectionContainer}>
         <ScrollView
           horizontal
@@ -147,7 +142,6 @@ export default function HomeScreen() {
         </ScrollView>
       </View>
 
-      {/* ===== Doctors List ===== */}
       <View style={{ flex: 1, paddingHorizontal: 10 }}>
         <Text style={styles.sectionTitle}>
           {selectedCategory ? `${selectedCategory} Specialists` : "All Doctors"}
@@ -183,7 +177,7 @@ export default function HomeScreen() {
   );
 }
 
-/* ===== Styles (معدلة قليلاً لتناسب التصميم الجديد) ===== */
+
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#F8F9FC" },
   center: { flex: 1, justifyContent: "center", alignItems: "center" },

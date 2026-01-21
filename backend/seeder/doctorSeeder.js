@@ -45,14 +45,12 @@ const doctorsData = [
     latitude: 34.020882,
     longitude: -6.84165,
   },
-  // باقي الأطباء بنفس النمط...
 ];
 
 const seedDoctors = async () => {
   try {
     await sequelize.authenticate();
 
-    // تأكد أن جدول Users موجود قبل Doctors
     await User.sync();
     await Doctor.sync({ force: true });
 

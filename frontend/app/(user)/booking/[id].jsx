@@ -12,7 +12,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { router, useLocalSearchParams } from "expo-router";
-import { useCreateBooking } from "../../../servis/booking/mutation.js"; // mutation اللي درنا
+import { useCreateBooking } from "../../../servis/booking/mutation.js"; 
 import moment from "moment";
 
 export default function BookingScreen() {
@@ -30,14 +30,14 @@ export default function BookingScreen() {
   const handleBooking = () => {
     createBookingMutation.mutate(
       {
-        doctorId: parseInt(doctorId, 10), // نتأكد أنه رقم
+        doctorId: parseInt(doctorId, 10), 
         bookingDate: moment(date).format("YYYY-MM-DD"),
         bookingTime: moment(time).format("HH:mm"),
         notes,
       },
       {
         onSuccess: () => {
-          alert("Booking confirmed successfully! ✅");
+          alert("Booking confirmed successfully! ");
           router.push("/home");
           
         },
@@ -50,7 +50,7 @@ export default function BookingScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
+  
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={26} color="#fff" />
@@ -59,13 +59,12 @@ export default function BookingScreen() {
         <View style={{ width: 26 }} />
       </View>
 
-      {/* Content */}
       <View style={styles.card}>
-        {/* Doctor */}
+   
         <Text style={styles.label}>Doctor</Text>
         <Text style={styles.value}>{doctorName}</Text>
 
-        {/* Date */}
+     
         <Text style={styles.label}>Date</Text>
         <TouchableOpacity
           style={styles.input}
@@ -77,7 +76,7 @@ export default function BookingScreen() {
           </Text>
         </TouchableOpacity>
 
-        {/* Time */}
+     
         <Text style={styles.label}>Time</Text>
         <TouchableOpacity
           style={styles.input}
@@ -87,7 +86,7 @@ export default function BookingScreen() {
           <Text style={styles.inputText}>{moment(time).format("HH:mm")}</Text>
         </TouchableOpacity>
 
-        {/* Notes */}
+       
         <Text style={styles.label}>Notes (optional)</Text>
         <TextInput
           style={styles.textArea}
@@ -97,7 +96,7 @@ export default function BookingScreen() {
           multiline
         />
 
-        {/* Button */}
+     
         <TouchableOpacity
           style={[
             styles.button,
@@ -114,7 +113,7 @@ export default function BookingScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* Pickers */}
+  
       {showDate && (
         <DateTimePicker
           value={date}

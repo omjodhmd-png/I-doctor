@@ -43,7 +43,6 @@ export default function SearchScreen() {
     changeHandler(text);
   };
 
-  // kan-3ayto l-hook gha ila kante debouncedSearch fiha m-ktoub
   const { data: doctors, isLoading, isError } = useGetAllDoctors({
     search: debouncedSearch,
   });
@@ -100,7 +99,7 @@ export default function SearchScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header Search */}
+
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
           <Ionicons name="arrow-back" size={24} color="#0A84FF" />
@@ -117,9 +116,9 @@ export default function SearchScreen() {
         </View>
       </View>
 
-      {/* Conditonal Rendering */}
+
       {debouncedSearch.length === 0 ? (
-        // 1. fach t-koun l-blassa dial search khawya
+   
         <View style={styles.centered}>
           <Ionicons name="search-outline" size={80} color="#E0E0E0" />
           <Text style={{ color: "#AAA", marginTop: 10, fontSize: 16 }}>
@@ -127,12 +126,12 @@ export default function SearchScreen() {
           </Text>
         </View>
       ) : isLoading ? (
-        // 2. fach kikon kitcharja
+    
         <View style={styles.centered}>
           <ActivityIndicator size="large" color="#0A84FF" />
         </View>
       ) : (
-        // 3. fach kital'o l-nata'ij
+    
         <FlatList
           data={doctors || []}
           keyExtractor={(item) => item.id.toString()}

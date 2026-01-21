@@ -11,11 +11,10 @@ export const authMiddleware = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     
-    // هنا attach doctorId كذلك
     req.user = {
       id: decoded.id,
       role: decoded.role,
-      doctorId: decoded.doctorId // ⬅️ مهم
+      doctorId: decoded.doctorId 
     };
 
     next();

@@ -2,31 +2,25 @@ import Booking from "../models/booking.js";
 import Doctor from "../models/doctor.js";
 import User from "../models/user.js";
 import { Op } from "sequelize";
-import { Sequelize } from "sequelize";
 
 
-/**
- * ✅ Create new booking
- * userId كيجي من auth (req.user.id)
- */
 export const createBooking = async (req, res) => {
   try {
     const userId = req.user.id;
     const { doctorId, bookingDate, bookingTime, notes } = req.body;
 
-    // تحقق من الطبيب
+
     const doctor = await Doctor.findByPk(doctorId);
     if (!doctor) {
       return res.status(404).json({ message: "Doctor not found" });
     }
 
-    // تحقق واش الوقت محجوز
     const existingBooking = await Booking.findOne({
       where: {
         doctorId,
         bookingDate,
         bookingTime,
-        status: { [Op.in]: ["Pending", "Confirmed"] },
+        status: { [Op.in]: ["Pending", "Confirmed"] }, 
       },
     });
 
@@ -54,9 +48,6 @@ export const createBooking = async (req, res) => {
   }
 };
 
-/**
- * 📋 Get bookings of logged user
- */
 export const getMyBookings = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -74,12 +65,10 @@ export const getMyBookings = async (req, res) => {
   }
 };
 
-/**
- * 👨‍⚕️ Get bookings of doctor
- */
+
 export const getDoctorBookings = async (req, res) => {
   try {
-    const doctorId = req.user.id; // assuming doctor is logged in
+    const doctorId = req.user.id; 
     const bookings = await Booking.findAll({
       where: { doctorId },
       include: [{ model: User }],
@@ -96,7 +85,6 @@ export const getDoctorBookings = async (req, res) => {
 
 export const getDoctorTotalBookings = async (req, res) => {
   try {
-    // كنجيبو الطبيب انطلاقا من الـ id ديال المستخدم اللي مسجل الدخول
     const doctor = await Doctor.findOne({ where: { userId: req.user.id } });
 
     if (!doctor) {
@@ -119,28 +107,26 @@ export const getDoctorTotalBookings = async (req, res) => {
 
 export const getDoctorBookingsSorted = async (req, res) => {
   try {
-    // 1. التأكد من أن المستخدم طبيب
     if (req.user.role !== "doctor") {
-      return res.status(403).json({ message: "غير مصرح لك بالدخول" });
+      return res.status(403).json({ message: "not " });
     }
 
-    // 2. البحث عن id الطبيب باستخدام id المستخدم الموجود في التوكن
     const doctor = await Doctor.findOne({ 
       where: { userId: req.user.id } 
     });
 
     if (!doctor) {
-      return res.status(404).json({ message: "لم يتم العثور على ملف طبيب لهذا المستخدم" });
+      return res.status(404).json({ message: "doctor not found"});
     }
 
-    const doctorId = doctor.id; // الآن لدينا المعرف الصحيح (رقم 5 في مثالك)
+    const doctorId = doctor.id; 
 
-    // 3. جلب المواعيد وترتيبها
+    
     const bookings = await Booking.findAll({
       where: { doctorId },
       include: [{ model: User, attributes: ["id", "fullName"] }],
       order: [
-        ['bookingDate', 'DESC'], // الترتيب من الأحدث للأقدم
+        ['bookingDate', 'DESC'],
         ['bookingTime', 'DESC']
       ],
     });
@@ -148,15 +134,12 @@ export const getDoctorBookingsSorted = async (req, res) => {
     res.json(bookings);
   } catch (error) {
     console.error("Error in getDoctorBookingsSorted:", error);
-    res.status(500).json({ message: "خطأ في الخادم" });
+    res.status(500).json({ message: "server error" });
   }
 };
 
 
-/**
- * 🔄 Update booking status
- * Doctor confirms or cancels
- */export const updateBookingStatus = async (req, res) => {
+export const updateBookingStatus = async (req, res) => {
   try {
     const { id } = req.params;
     const { status } = req.body;
@@ -173,7 +156,6 @@ export const getDoctorBookingsSorted = async (req, res) => {
       return res.status(404).json({ message: "Booking not found" });
     }
 
-    // ✅ فقط الطبيب لي عندو نفس userId يقدر يبدل الحالة
     if (
       req.user.role !== "doctor" ||
       booking.Doctor.userId !== req.user.id
@@ -189,7 +171,7 @@ export const getDoctorBookingsSorted = async (req, res) => {
       booking,
     });
   } catch (error) {
-    console.error("UPDATE BOOKING STATUS ERROR ❌", error);
+    console.error("UPDATE BOOKING STATUS ERROR ", error);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -197,9 +179,6 @@ export const getDoctorBookingsSorted = async (req, res) => {
 
 
 
-/**
- * ❌ Cancel booking (by user)
- */
 export const cancelBooking = async (req, res) => {
   try {
     const { id } = req.params;
@@ -210,7 +189,6 @@ export const cancelBooking = async (req, res) => {
       return res.status(404).json({ message: "Booking not found" });
     }
 
-    // ✅ غير user لي دار booking يقدر يلغي
     if (req.user.role !== "user" || booking.userId !== req.user.id) {
       return res.status(403).json({ message: "Not authorized" });
     }
@@ -223,15 +201,12 @@ export const cancelBooking = async (req, res) => {
       booking,
     });
   } catch (error) {
-    console.error("CANCEL BOOKING ERROR ❌", error);
+    console.error("CANCEL BOOKING ERROR ", error);
     res.status(500).json({ message: "Server error" });
   }
 };
 
 
-/**
- * 🔍 Get booking by ID
- */
 export const getBookingById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -253,7 +228,6 @@ export const getBookingById = async (req, res) => {
       return res.status(404).json({ message: "Booking not found" });
     }
 
-    // ✅ user لي دار booking أو doctor ديالو فقط
     const isUser = req.user.id === booking.userId;
     const isDoctor =
       req.user.role === "doctor" &&
@@ -265,7 +239,7 @@ export const getBookingById = async (req, res) => {
 
     res.json(booking);
   } catch (error) {
-    console.error("GET BOOKING BY ID ERROR ❌", error);
+    console.error("GET BOOKING BY ID ERROR ", error);
     res.status(500).json({ message: "Server error" });
   }
 };

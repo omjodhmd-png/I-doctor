@@ -15,12 +15,6 @@ export default function Layout() {
       <Stack.Screen name="(tabs)" options={{headerShown:false}}/>
       <Stack.Screen name="booking-details/[id]" options={{headerShown:false}}/>
 
-
-      
-
-
-    
-
      </Stack>
   );
 }

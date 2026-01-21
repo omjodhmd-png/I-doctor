@@ -1,6 +1,5 @@
-// store/booking-store.js
 import { create } from "zustand";
-import useAuthStore from "./login-store.js"; // store ديال auth
+import useAuthStore from "./login-store.js";
 import { instance  } from "../servis/instance.js";
 
 const useBookingStore = create((set, get) => ({
@@ -8,7 +7,7 @@ const useBookingStore = create((set, get) => ({
   loading: false,
   error: null,
 
-  // ✅ تحميل جميع الحجوزات ديال المستخدم
+ 
   loadBookings: async () => {
     try {
       set({ loading: true, error: null });
@@ -26,7 +25,7 @@ const useBookingStore = create((set, get) => ({
     }
   },
 
-  // ✅ إنشاء booking جديد
+
   createBooking: async ({ doctorId, bookingDate, bookingTime, notes }) => {
     try {
       set({ loading: true, error: null });
@@ -40,7 +39,7 @@ const useBookingStore = create((set, get) => ({
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      // زيد الـ booking الجديد للقائمة محلياً
+      
       set((state) => ({
         bookings: [res.data.booking, ...state.bookings],
         loading: false,
@@ -53,7 +52,6 @@ const useBookingStore = create((set, get) => ({
     }
   },
 
-  // ✅ إلغاء booking
   cancelBooking: async (bookingId) => {
     try {
       set({ loading: true, error: null });
@@ -66,7 +64,6 @@ const useBookingStore = create((set, get) => ({
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      // حدف الـ booking من القائمة محلياً
       set((state) => ({
         bookings: state.bookings.filter((b) => b.id !== bookingId),
         loading: false,

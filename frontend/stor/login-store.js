@@ -7,7 +7,6 @@ const useAuthStore = create((set) => ({
   user: null,
   loading: true,
 
-  // Load token/user men storage
   loadAuth: async () => {
     try {
       const token = await AsyncStorage.getItem("token");
@@ -26,10 +25,10 @@ const useAuthStore = create((set) => ({
     }
   },
 
-  // Set auth safely
+
   setAuth: async ({ token, user }) => {
     try {
-      if (token != null) { // check null/undefined
+      if (token != null) { 
         await AsyncStorage.setItem("token", token);
       } else {
         await AsyncStorage.removeItem("token");
@@ -51,7 +50,6 @@ const useAuthStore = create((set) => ({
     }
   },
 
-  // Logout
   logout: async () => {
     try {
       await AsyncStorage.removeItem("token");

@@ -47,16 +47,15 @@ const seedBookings = async () => {
     await sequelize.authenticate();
     console.log("✅ DB connected");
 
-    // تأكد من أن Users و Doctors موجودين قبل Bookings
     await User.sync();
     await Doctor.sync();
-    await Booking.sync({ force: true }); // يمسح القديم ويخلق الجديد
+    await Booking.sync({ force: true }); 
 
     await Booking.bulkCreate(bookingsData);
     console.log("✅ Bookings seeded successfully!");
     process.exit(0);
   } catch (err) {
-    console.error("❌ Bookings seeding error:", err);
+    console.error(" Bookings seeding error:", err);
     process.exit(1);
   }
 };
