@@ -123,12 +123,26 @@ This version of iDoctor is intentionally kept simple and focuses only on the cor
 * role (Patient / Doctor)
 
 ### Doctor
-
-* id
-* userId
-* specialty
-* description
-* availability
+id
+userId
+fullName
+speciality
+bio
+imageUrl
+clinicName
+experience
+languages
+workTime
+availabilityDays
+consultationDuration
+phone
+address
+latitude
+longitude
+rating
+price
+certifications
+isAvailable
 
 ### booking
 
@@ -138,8 +152,6 @@ This version of iDoctor is intentionally kept simple and focuses only on the cor
 * date
 * time
 * status
-
-
 
 ## 8. Suggested Technologies
 
