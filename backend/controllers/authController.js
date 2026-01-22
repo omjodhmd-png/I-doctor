@@ -91,12 +91,12 @@ export const login = async (req, res) => {
       { expiresIn: "7d" }
     );
 
-    // 6️⃣ Response
     res.status(200).json({
       message: "Login success",
       token,
       role: user.role,
-      user: {
+      user: 
+      {
         id: user.id,
         fullName: user.fullName,
         email: user.email,

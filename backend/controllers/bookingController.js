@@ -42,6 +42,7 @@ export const createBooking = async (req, res) => {
       message: "Booking created successfully",
       booking,
     });
+    
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Server error" });
@@ -71,7 +72,7 @@ export const getDoctorBookings = async (req, res) => {
     const doctorId = req.user.id; 
     const bookings = await Booking.findAll({
       where: { doctorId },
-      include: [{ model: User }],
+      include: [{ model: User }],  
       order: [["bookingDate", "ASC"], ["bookingTime", "ASC"]],
     });
 
@@ -101,42 +102,38 @@ export const getDoctorTotalBookings = async (req, res) => {
   }
 };
 
+// export const getDoctorBookingsSorted = async (req, res) => {
+//   try {
+//     if (req.user.role !== "doctor") {
+//       return res.status(403).json({ message: "not " });
+//     }
 
+//     const doctor = await Doctor.findOne({ 
+//       where: { userId: req.user.id } 
+//     });
 
+//     if (!doctor) {
+//       return res.status(404).json({ message: "doctor not found"});
+//     }
 
-
-export const getDoctorBookingsSorted = async (req, res) => {
-  try {
-    if (req.user.role !== "doctor") {
-      return res.status(403).json({ message: "not " });
-    }
-
-    const doctor = await Doctor.findOne({ 
-      where: { userId: req.user.id } 
-    });
-
-    if (!doctor) {
-      return res.status(404).json({ message: "doctor not found"});
-    }
-
-    const doctorId = doctor.id; 
+//     const doctorId = doctor.id; 
 
     
-    const bookings = await Booking.findAll({
-      where: { doctorId },
-      include: [{ model: User, attributes: ["id", "fullName"] }],
-      order: [
-        ['bookingDate', 'DESC'],
-        ['bookingTime', 'DESC']
-      ],
-    });
+//     const bookings = await Booking.findAll({
+//       where: { doctorId },
+//       include: [{ model: User, attributes: ["id", "fullName"] }],
+//       order: [
+//         ['bookingDate', 'DESC'],
+//         ['bookingTime', 'DESC']
+//       ],
+//     });
 
-    res.json(bookings);
-  } catch (error) {
-    console.error("Error in getDoctorBookingsSorted:", error);
-    res.status(500).json({ message: "server error" });
-  }
-};
+//     res.json(bookings);
+//   } catch (error) {
+//     console.error("Error in getDoctorBookingsSorted:", error);
+//     res.status(500).json({ message: "server error" });
+//   }
+// };
 
 
 export const updateBookingStatus = async (req, res) => {

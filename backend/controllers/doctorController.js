@@ -27,10 +27,6 @@ export const getAllDoctors = async (req, res) => {
 };
 
 
-
-
-
-
 export const getDoctorById = async (req, res) => {
   const { id } = req.params;
   try {
@@ -49,8 +45,6 @@ export const getDoctorById = async (req, res) => {
 export const createDoctor = async (req, res) => {
   try {
 
-   
-
     const existingDoctor = await Doctor.findOne({ where: { userId: req.user.id } });
     if (existingDoctor) {
       return res.status(400).json({ message: "Doctor profile already exists" });
@@ -60,13 +54,11 @@ export const createDoctor = async (req, res) => {
       return res.status(400).json({ message: "Please choose location" });
     }
 
-
     const doctor = await Doctor.create({
       ...req.body,
 
       userId: req.user.id,
 
-     
     });
 
     res.status(201).json(doctor);
