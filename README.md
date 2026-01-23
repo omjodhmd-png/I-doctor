@@ -1,33 +1,56 @@
-# 📘 Cahier de Charges – **iDoctor Mobile Application** (Simple Version)
+# 📘 Cahier de Charges – **iDoctor Mobile Application** (MVP)
+
+---
 
 ## 1. General Presentation
 
 **Application Name:** iDoctor
 **Platform:** Mobile Application (Android & iOS)
-**Application Type:** Medical appointment & consultation app
-**Target Version:** MVP – Simple & Educational
+**Application Type:** Medical appointment & consultation application
+**Target Version:** MVP – Simple, Educational & Functional
 
-**Main Objective:**
-The goal of the iDoctor application is to simplify the interaction between patients and doctors by providing an easy-to-use mobile platform for searching doctors, booking appointments.
+### 🎯 Main Objective
+
+The objective of the iDoctor application is to simplify interaction between patients and doctors by providing a mobile platform that allows users to search for doctors, view their profiles, and book medical appointments easily.
+
+This version focuses on the essential features only, without advanced medical or financial functionalities.
 
 ---
 
 ## 2. Target Users
 
-### 👤 Patient
+### 👤 Patient (User)
 
+* Register and log in
 * Search for doctors by specialty
 * View doctor profiles
 * Book medical appointments
+* View appointment status
 
 ### 🧑‍⚕️ Doctor
 
-* Create professional profile
-* View and confirm appointments
+* Register and log in
+* Create and manage professional profile
+* View appointment requests
+* Confirm or manage appointments
+
+---
 
 ## 3. Scope of the Application
 
-This version of iDoctor is intentionally kept simple and focuses only on the core features needed to demonstrate a functional healthcare booking system. Advanced features such as video calls, payments, and medical records are excluded from this phase.
+This MVP version is intentionally kept simple and focuses on:
+
+* Authentication & authorization
+* Doctor listing and profiles
+* Appointment booking system
+
+❌ Excluded features in this phase:
+
+* Online payments
+* Video consultations
+* Medical records
+* Notifications
+* Chat system
 
 ---
 
@@ -35,35 +58,50 @@ This version of iDoctor is intentionally kept simple and focuses only on the cor
 
 ### 4.1 Authentication & Authorization
 
-* User registration (user / Doctor)
-* User login with email and password
-* Secure authentication using JWT
-* Role-based access (user / Doctor)
+* User registration (Patient / Doctor)
+* Login with email and password
+* Password encryption using bcrypt
+* Authentication using JWT
+* Role-based access control (Patient / Doctor)
+
+---
 
 ### 4.2 Doctor Management
 
 * Doctors can create a professional profile
-* Profile includes specialty, description, and availability
+* Doctor profile includes:
+
+  * Full name
+  * Specialty
+  * Description (bio)
+  * Availability
 * Doctors appear in the public doctor list
+
+---
 
 ### 4.3 Appointment Management
 
 * Patients can book appointments
 * Doctors can view appointment requests
-* Appointment status: pending / confirmed
+* Appointment status lifecycle:
 
+  * Pending
+  * Confirmed
+  * Cancelled
 
 ---
 
 ## 5. Non-Functional Requirements
 
-* Simple and intuitive UI
+* Simple and intuitive user interface
 * Fast response time
 * Secure data handling
-* Scalable architecture for future upgrades
+* Scalable architecture
+* Clean code structure
 
 ---
 
+## 6. Application Screens
 
 ### 1️⃣ Splash Screen
 
@@ -72,7 +110,7 @@ This version of iDoctor is intentionally kept simple and focuses only on the cor
 
 ### 2️⃣ Onboarding Screens
 
-* Short introduction to app features
+* Introduction to application features
 
 ### 3️⃣ Login Screen
 
@@ -82,14 +120,14 @@ This version of iDoctor is intentionally kept simple and focuses only on the cor
 
 ### 4️⃣ Register Screen
 
-* Full Name
+* Full name
 * Email
 * Password
-* Role selection (user/ Doctor)
+* Role selection (Patient / Doctor)
 
 ### 5️⃣ Home Screen
 
-* Search icon
+* Search bar
 * List of doctors
 * Filter by specialty
 
@@ -99,7 +137,7 @@ This version of iDoctor is intentionally kept simple and focuses only on the cor
 * Name & specialty
 * Description
 * Availability
-* Book Appointment button
+* Book appointment button
 
 ### 7️⃣ Appointment Booking Screen
 
@@ -109,8 +147,10 @@ This version of iDoctor is intentionally kept simple and focuses only on the cor
 
 ### 8️⃣ My Appointments Screen
 
-* List of booked appointments
+* List of appointments
 * Appointment status
+
+---
 
 ## 7. Data Models (Simplified)
 
@@ -123,28 +163,29 @@ This version of iDoctor is intentionally kept simple and focuses only on the cor
 * role (Patient / Doctor)
 
 ### Doctor
-id
-userId
-fullName
-speciality
-bio
-imageUrl
-clinicName
-experience
-languages
-workTime
-availabilityDays
-consultationDuration
-phone
-address
-latitude
-longitude
-rating
-price
-certifications
-isAvailable
 
-### booking
+* id
+* userId
+* fullName
+* speciality
+* bio
+* imageUrl
+* clinicName
+* experience
+* languages
+* workTime
+* availabilityDays
+* consultationDuration
+* phone
+* address
+* latitude
+* longitude
+* rating
+* price
+* certifications
+* isAvailable
+
+### Booking
 
 * id
 * patientId
@@ -153,11 +194,14 @@ isAvailable
 * time
 * status
 
+---
+
 ## 8. Suggested Technologies
 
 ### Frontend
 
-* React Native / Expo
+* React Native
+* Expo
 
 ### Backend
 
@@ -166,7 +210,7 @@ isAvailable
 
 ### Database
 
-*  PostgreSQL
+* PostgreSQL
 
 ### Authentication
 
@@ -176,15 +220,89 @@ isAvailable
 
 ## 9. Security Requirements
 
-* Password encryption (bcrypt)
+* Password hashing with bcrypt
 * JWT-based authentication
-* Input validation zod
+* Input validation using Zod
 * Role-based authorization
+* Protected API routes
 
 ---
 
+## 10. Dockerization (Containerization)
 
+### 10.1 Objectives
 
-## 11. Conclusion
+* Simplify development setup
+* Ensure environment consistency
+* Isolate backend and database
+* Prepare for deployment
 
-This cahier de charges defines a simple yet functional version of the iDoctor application. It is suitable for academic projects, MVP development, or technical demonstrations. The architecture is designed to be scalable, allowing future enhancements without major restructuring.
+### 10.2 Docker Architecture
+
+#### 🐳 Backend Container
+
+* Node.js + Express API
+* Handles users, doctors, bookings
+
+#### 🐘 Database Container
+
+* PostgreSQL database
+* Persistent storage using Docker volumes
+
+---
+
+### 10.3 Tools Used
+
+* Docker
+* Docker Compose
+
+---
+
+### 10.4 Services Overview
+
+* **api**
+
+  * Node.js backend service
+  * Exposes REST API
+  * Uses environment variables
+
+* **db**
+
+  * PostgreSQL official image
+  * Persistent data volume
+
+---
+
+### 10.5 Environment Variables
+
+* DB_NAME
+* DB_USER
+* DB_PASSWORD
+* DB_HOST
+* JWT_SECRET
+* PORT
+
+---
+
+### 10.6 Docker Benefits
+
+* Easy onboarding for developers
+* Single command startup (`docker compose up`)
+* No local dependency conflicts
+* Scalable architecture
+
+---
+
+## 11. Future Improvements (Out of Scope)
+
+* Online payments
+* Notifications
+* Chat system
+* Video consultations
+* Medical history management
+
+---
+
+## 12. Conclusion
+
+This cahier de charges defines a complete and simple MVP version of the iDoctor mobile application. It is suitable for academic projects, technical demonstrations, and MVP validation. The architecture is clean, secure, and scalable, allowing future enhancements without major restructuring.
