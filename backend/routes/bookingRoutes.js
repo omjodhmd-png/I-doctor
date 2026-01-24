@@ -23,7 +23,6 @@ router.patch("/:id/cancel", authMiddleware, cancelBooking);
 
 router.get("/doctor", authMiddleware,roleMiddleware("doctor"),getDoctorBookings);
 
-// router.get("/doctor/bookings",authMiddleware, roleMiddleware("doctor"), getDoctorBookingsSorted);
 
 router.get("/doctor/total-bookings", authMiddleware, roleMiddleware("doctor"), getDoctorTotalBookings);
 

@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import { useEffect } from "react";
 import { ActivityIndicator, View } from "react-native";
-import useAuthStore from "../stor/login-store.js"; // بدّل path حسب المشروع ديالك
+import useAuthStore from "../stor/login-store.js"; 
 
 const queryClient = new QueryClient();
 
@@ -15,7 +15,6 @@ export default function Layout() {
   
   }, []);
 
-  // ⛔ مهم بزاف: ما تخليش Stack يتحمّل حتى auth يكون واجد
   if (loading) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>

@@ -26,7 +26,7 @@ export default function SplashScreen() {
     textTranslateY.value = withSpring(0, { damping: 12, stiffness: 180 });
 
     const timer = setTimeout(() => {
-      router.replace("/register");
+      router.replace("/home");
     }, 3000);
 
     return () => clearTimeout(timer);

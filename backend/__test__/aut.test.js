@@ -1,26 +1,20 @@
 import { jest } from "@jest/globals";
 
-/**
- * 1️⃣ MOCKS (خاصهم يكونو قبل أي import)
- */
 
-// Mock User model
 jest.mock("../models/user.js", () => ({
   __esModule: true,
   default: {
-    hasOne: jest.fn(),     // باش ما يطيحش Sequelize
+    hasOne: jest.fn(),    
     findOne: jest.fn(),
     create: jest.fn(),
   },
 }));
 
-// Mock Doctor model (فارغ حيث ما محتاجينو)
 jest.mock("../models/doctor.js", () => ({
   __esModule: true,
   default: {},
 }));
 
-// Mock bcrypt
 jest.mock("bcrypt", () => ({
   __esModule: true,
   default: {
@@ -28,7 +22,6 @@ jest.mock("bcrypt", () => ({
   },
 }));
 
-// Mock jwt
 jest.mock("jsonwebtoken", () => ({
   __esModule: true,
   default: {
@@ -36,9 +29,7 @@ jest.mock("jsonwebtoken", () => ({
   },
 }));
 
-/**
- * 2️⃣ IMPORTS (من بعد mocks)
- */
+
 import { register } from "../controllers/authController.js";
 import User from "../models/user.js";
 import bcrypt from "bcrypt";
@@ -48,7 +39,6 @@ describe("REGISTER controller", () => {
   let req, res;
 
   beforeEach(() => {
-    // نحبسو console.error باش ما يبانش فـ test
     jest.spyOn(console, "error").mockImplementation(() => {});
 
     req = {
@@ -72,9 +62,7 @@ describe("REGISTER controller", () => {
     console.error.mockRestore();
   });
 
-  /**
-   * ✅ SUCCESS
-   */
+ 
   it("should register user successfully", async () => {
     User.findOne.mockResolvedValue(null);
     bcrypt.hash.mockResolvedValue("hashedPassword");
@@ -98,9 +86,7 @@ describe("REGISTER controller", () => {
     );
   });
 
-  /**
-   * ❌ EMAIL EXISTS
-   */
+ 
   it("should return 400 if email already exists", async () => {
     User.findOne.mockResolvedValue({ id: 1 });
 
@@ -112,9 +98,7 @@ describe("REGISTER controller", () => {
     });
   });
 
-  /**
-   * ❌ MISSING FIELDS
-   */
+ 
   it("should return 400 if required fields are missing", async () => {
     req.body = { email: "", password: "" };
 
@@ -126,9 +110,7 @@ describe("REGISTER controller", () => {
     });
   });
 
-  /**
-   * ⚠️ INVALID ROLE → user
-   */
+
   it("should force role to user if invalid role provided", async () => {
     req.body.role = "invalidRole";
 
@@ -152,9 +134,6 @@ describe("REGISTER controller", () => {
     );
   });
 
-  /**
-   * 💥 SERVER ERROR
-   */
   it("should handle server error", async () => {
     User.findOne.mockRejectedValue(new Error("DB error"));
 

@@ -102,38 +102,6 @@ export const getDoctorTotalBookings = async (req, res) => {
   }
 };
 
-// export const getDoctorBookingsSorted = async (req, res) => {
-//   try {
-//     if (req.user.role !== "doctor") {
-//       return res.status(403).json({ message: "not " });
-//     }
-
-//     const doctor = await Doctor.findOne({ 
-//       where: { userId: req.user.id } 
-//     });
-
-//     if (!doctor) {
-//       return res.status(404).json({ message: "doctor not found"});
-//     }
-
-//     const doctorId = doctor.id; 
-
-    
-//     const bookings = await Booking.findAll({
-//       where: { doctorId },
-//       include: [{ model: User, attributes: ["id", "fullName"] }],
-//       order: [
-//         ['bookingDate', 'DESC'],
-//         ['bookingTime', 'DESC']
-//       ],
-//     });
-
-//     res.json(bookings);
-//   } catch (error) {
-//     console.error("Error in getDoctorBookingsSorted:", error);
-//     res.status(500).json({ message: "server error" });
-//   }
-// };
 
 
 export const updateBookingStatus = async (req, res) => {

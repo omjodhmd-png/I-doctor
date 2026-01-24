@@ -55,10 +55,10 @@ const seedDoctors = async () => {
     await Doctor.sync({ force: true });
 
     await Doctor.bulkCreate(doctorsData);
-    console.log("✅ Doctors seeded successfully!");
+    console.log(" Doctors seeded successfully!");
     process.exit(0);
   } catch (err) {
-    console.error("❌ Doctors seeding error:", err);
+    console.error(" Doctors seeding error:", err);
     process.exit(1);
   }
 };

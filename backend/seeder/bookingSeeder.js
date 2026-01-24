@@ -45,14 +45,14 @@ const bookingsData = [
 const seedBookings = async () => {
   try {
     await sequelize.authenticate();
-    console.log("✅ DB connected");
+    console.log(" DB connected");
 
     await User.sync();
     await Doctor.sync();
     await Booking.sync({ force: true }); 
 
     await Booking.bulkCreate(bookingsData);
-    console.log("✅ Bookings seeded successfully!");
+    console.log(" Bookings seeded successfully!");
     process.exit(0);
   } catch (err) {
     console.error(" Bookings seeding error:", err);
