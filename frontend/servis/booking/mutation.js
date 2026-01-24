@@ -1,50 +1,28 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { instance } from "../instance.js";
-import useAuthStore from "../../stor/login-store.js";
-
 
 export const useUpdateBookingStatus = () => {
-  const token = useAuthStore.getState().token;
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async ({ bookingId, status }) => {
-      const res = await instance.patch(
-        `/bookings/${bookingId}/status`,
-        { status },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const res = await instance.patch(`/bookings/${bookingId}/status`, { status });
       return res.data;
     },
     onSuccess: (data, variables) => {
-  
-      queryClient.invalidateQueries({
-        queryKey: ["booking-details", Number(variables.bookingId)],
-      });
-
-     
-      queryClient.invalidateQueries({
-        queryKey: ["doctor-bookings"],
-      });
-
-  
-      queryClient.invalidateQueries({
-        queryKey: ["doctor-total-bookings"],
-      });
+      queryClient.invalidateQueries({ queryKey: ["booking-details", Number(variables.bookingId)] });
+      queryClient.invalidateQueries({ queryKey: ["doctor-bookings"] });
+      queryClient.invalidateQueries({ queryKey: ["doctor-total-bookings"] });
     },
   });
 };
 
-
 export const useCreateBooking = () => {
   const queryClient = useQueryClient();
-  const token = useAuthStore.getState().token;
 
   return useMutation({
     mutationFn: async (bookingData) => {
-      const res = await instance.post("/bookings", bookingData, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await instance.post("/bookings", bookingData);
       return res.data;
     },
     onSuccess: () => {
