@@ -14,7 +14,8 @@ import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import { useCreateDoctor } from "../../servis/doctor/mutation.js";
 import  useCreateDoctorStore  from "../../stor/register-store.js";
-
+import Input from "../../components/input.jsx";
+import TextArea from "../../components/textArea.jsx";
 
 export default function DoctorInfoScreen() {
   const { doctor, setDoctorField, resetDoctor } = useCreateDoctorStore();
@@ -115,30 +116,6 @@ export default function DoctorInfoScreen() {
 }
 
 
-const Input = ({ label, value, onChange, keyboard, editable = true }) => (
-  <View style={styles.inputBox}>
-    <TextInput
-      placeholder={label}
-      value={value}
-      onChangeText={onChange}
-      keyboardType={keyboard}
-      editable={editable}
-      style={styles.input}
-    />
-  </View>
-);
-
-const TextArea = ({ label, value, onChange }) => (
-  <View style={[styles.inputBox, { height: 100, paddingTop: 10 }]}>
-    <TextInput
-      placeholder={label}
-      value={value}
-      onChangeText={onChange}
-      multiline
-      style={[styles.input, { height: 80 }]}
-    />
-  </View>
-);
 
 
 const styles = StyleSheet.create({
@@ -152,22 +129,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginTop: 25,
     marginBottom: 20,
-  },
-
-  inputBox: {
-    backgroundColor: "#fff",
-    borderRadius: 12,
-    paddingHorizontal: 15,
-    height: 55,
-    justifyContent: "center",
-    marginBottom: 14,
-    borderWidth: 1,
-    borderColor: "#e6eaf0",
-  },
-
-  input: {
-    fontSize: 15,
-    color: "#000",
   },
 
   mapButton: {
